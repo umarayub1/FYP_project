@@ -1,0 +1,93 @@
+{
+  "app": {
+    "name": "Synapse",
+    "tagline": "AI-powered study platform"
+  },
+  "nav": {
+    "nowBrief": "Now Brief",
+    "masterFlashcards": "Master Flashcards",
+    "allPdfs": "All PDFs",
+    "allNotes": "All Notes",
+    "studySets": "Study Sets",
+    "newStudySet": "+ New Study Set",
+    "settings": "Settings",
+    "documents": "Documents",
+    "flashcards": "Flashcards",
+    "feynman": "Feynman"
+  },
+  "shell": {
+    "skipToMain": "Skip to main content",
+    "skipToSidePanel": "Skip to SidePanel",
+    "sidebarToggle": "Toggle sidebar",
+    "commandPalettePlaceholder": "Search or run a command…",
+    "syncStatus": {
+      "synced": "Synced",
+      "saving": "Saving…",
+      "error": "Sync error"
+    },
+    "themeToggle": "Theme: {{theme}} (current). Click to change.",
+    "themes": {
+      "system": "System",
+      "light": "Light",
+      "dark": "Dark"
+    }
+  },
+  "sidePanel": {
+    "modes": {
+      "coach": "Coach",
+      "cards": "Cards",
+      "cornell": "Cornell"
+    },
+    "coachHeader": "Smart Coach · scoped to {{studySet}}",
+    "stagedItems": "{{count}} staged",
+    "stagedCards": "{{count, number}} card staged",
+    "stagedCards_plural": "{{count, number}} cards staged",
+    "unsavedGuard": "{{count}} card staged. Switching modes won't lose them.",
+    "unsavedGuard_plural": "{{count}} cards staged. Switching modes won't lose them.",
+    "commitAll": "Commit all",
+    "discardAll": "Discard all",
+    "newConversation": "New conversation"
+  },
+  "commandPalette": {
+    "placeholder": "Search or run a command…",
+    "groups": {
+      "navigate": "Navigate",
+      "actions": "Actions",
+      "smartCoach": "Smart Coach"
+    },
+    "noResults": "No matches for '{{query}}'. Try fewer words.",
+    "noResultsCta": "Ask Smart Coach instead"
+  },
+  "errors": {
+    "notFound": {
+      "title": "Page not found",
+      "description": "The page you're looking for doesn't exist or has been moved.",
+      "cta": "Go to Now Brief"
+    },
+    "serverError": {
+      "title": "Something went wrong",
+      "description": "We encountered an unexpected error. The team has been notified.",
+      "cta": "Try again"
+    }
+  },
+  "auth": {
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "emailLabel": "Email address",
+    "continueButton": "Continue",
+    "googleButton": "Continue with Google",
+    "newToSynapse": "New to Synapse? Sign up",
+    "alreadyHaveAccount": "Already have an account? Sign in"
+  },
+  "settings": {
+    "tabs": {
+      "profile": "Profile",
+      "preferences": "Preferences",
+      "apiKeys": "API Keys",
+      "billing": "Billing"
+    }
+  },
+  "dumbMode": {
+    "banner": "Dumb Mode active — AI features disabled. Check your API key in Settings."
+  }
+}

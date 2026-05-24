@@ -1,0 +1,24 @@
+{
+  "extends": ["next/core-web-vitals"],
+  "rules": {
+    "no-restricted-syntax": [
+      "error",
+      {
+        "selector": "Property[key.name='type'][value.value='spring']",
+        "message": "Framer Motion type:\"spring\" is banned (UX_v3.md §1.4). Use --ease-out or --ease-in-out CSS custom properties."
+      },
+      {
+        "selector": "JSXAttribute[name.name='tabIndex']",
+        "message": "tabIndex is banned unless value is 0 or -1 (UX_v3.md §23.2). Remove it and use natural DOM order."
+      }
+    ],
+    "no-restricted-properties": [
+      "error",
+      {
+        "object": "localStorage",
+        "property": "setItem",
+        "message": "Never store sensitive data (tokens, API keys) in localStorage (UX_v3.md §23.2). Check what you are persisting."
+      }
+    ]
+  }
+}

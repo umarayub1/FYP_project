@@ -1,0 +1,173 @@
+networks:
+  synapse-net:
+    driver: bridge
+
+volumes:
+  mongo-data:
+  chroma-data:
+
+services:
+  # ── Infrastructure ─────────────────────────────────────────────────────────
+
+  mongodb:
+    image: mongo:7
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - synapse-net
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  chromadb:
+    image: chromadb/chroma:0.6.0
+    ports:
+      - "8001:8000"
+    volumes:
+      - chroma-data:/chroma/chroma
+    networks:
+      - synapse-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/heartbeat"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - synapse-net
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # ── Application Services ───────────────────────────────────────────────────
+
+  core-service:
+    build:
+      context: ./apps/core-service
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    env_file: .env
+    networks:
+      - synapse-net
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:4001/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  gateway:
+    build:
+      context: ./apps/gateway
+    ports:
+      - "4000:4000"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      core-service:
+        condition: service_healthy
+      ai-engine:
+        condition: service_started
+    env_file: .env
+    volumes:
+      - ./uploads:/app/uploads
+    networks:
+      - synapse-net
+
+  ai-engine:
+    build:
+      context: ./services/ai-engine
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      chromadb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    env_file: .env
+    ports:
+      - "8000:8000"
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    volumes:
+      - ./uploads:/app/uploads
+    networks:
+      - synapse-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  pdf-ingestion-worker:
+    build:
+      context: ./services/ai-engine
+    command: python -m workers
+    depends_on:
+      redis:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
+      chromadb:
+        condition: service_healthy
+      core-service:
+        condition: service_healthy
+    env_file: .env
+    volumes:
+      - ./uploads:/app/uploads
+    networks:
+      - synapse-net
+    restart: unless-stopped
+
+  flashcard-batch-worker:
+    build:
+      context: ./services/ai-engine
+    command: python -m workers.flashcard_batch_worker
+    depends_on:
+      redis:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
+      chromadb:
+        condition: service_healthy
+    env_file: .env
+    networks:
+      - synapse-net
+
+  frontend:
+    build:
+      context: ./apps/frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - gateway
+    env_file: .env
+    environment:
+      - GATEWAY_INTERNAL_URL=http://gateway:4000/api
+      - NEXT_PUBLIC_GATEWAY_URL=http://localhost:4000/api
+      - ENABLE_DEV_LOGIN=true
+      - NEXT_PUBLIC_ENABLE_DEV_LOGIN=true
+    networks:
+      - synapse-net
+
+  # ── Note: Ollama runs NATIVELY on the host (not in Docker) ─────────────────
+  # The AI Engine reaches it via host.docker.internal:11434

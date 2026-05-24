@@ -1,0 +1,526 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* === Surfaces (UX_v3.md §1.1 canonical) === */
+    --background:    40 14% 98%;   /* #FAF9F7 — warm white, paper feel */
+    --surface:       40 10% 96%;   /* #F5F4F1 */
+    --surface-2:     40  8% 93%;   /* #EEECEA */
+    --surface-3:     40  6% 89%;   /* #E4E2DD */
+    --border:        40  8% 88%;
+    --border-strong: 40  8% 78%;
+
+    /* === Text === */
+    --foreground:          240 8% 14%;   /* #212129 */
+    --foreground-muted:    240 4% 46%;
+    --foreground-subtle:   240 4% 60%;
+    --foreground-disabled: 240 4% 75%;
+
+    /* === Brand — Synapse ink-indigo (UX_v3.md §1.1) === */
+    --primary:        251 28% 38%;   /* #4A4580 */
+    --primary-fg:       0  0% 100%;
+    --primary-soft:   251 40% 95%;
+    --primary-hover:  251 28% 33%;
+    --primary-active: 251 28% 28%;
+
+    /* === Accent — warm amber, micro-accents only === */
+    --accent:      38 80% 44%;   /* #C8840A */
+    --accent-soft: 38 80% 95%;
+    --amber:       38 80% 44%;   /* alias for inline use */
+    --amber-soft:  38 80% 95%;
+
+    /* === Semantic === */
+    --success:      142 65% 38%;
+    --success-soft: 142 60% 95%;
+    --warning:       38 85% 44%;
+    --warning-soft:  38 85% 95%;
+    --danger:         0 68% 48%;
+    --danger-soft:    0 80% 96%;
+    --info:         210 80% 48%;
+    --info-soft:    210 90% 96%;
+
+    /* === SM-2 review (triple-redundant: numeral + label + color) === */
+    --sm2-again:   0 68% 48%;   /* red    */
+    --sm2-hard:   25 80% 46%;   /* orange */
+    --sm2-good:  142 65% 38%;   /* green  */
+    --sm2-easy:  210 80% 48%;   /* blue   */
+
+    /* === Cloze (color-blind safe, 4 hues) === */
+    --cloze-1: 251 28% 38%;   /* violet */
+    --cloze-2: 175 60% 35%;   /* teal   */
+    --cloze-3:  38 80% 44%;   /* amber  */
+    --cloze-4: 330 50% 45%;   /* pink   */
+
+    /* === StudySet colors — 8 canonical tokens === */
+    --set-violet: 251 28% 52%;
+    --set-teal:   175 55% 38%;
+    --set-amber:   38 78% 46%;
+    --set-red:      0 62% 50%;
+    --set-blue:   210 75% 50%;
+    --set-green:  140 55% 38%;
+    --set-pink:   330 50% 52%;
+    --set-slate:  220 15% 50%;
+
+    /* === Focus === */
+    --focus-ring: 251 28% 38%;
+
+    /* === Opacity === */
+    --opacity-disabled: 0.5;
+    --opacity-overlay:  0.55;
+
+    /* === Spacing === */
+    --space-content-x: 24px;
+    --space-panel-x:   16px;
+    --space-block-y:    8px;
+    --space-card-y:    12px;
+    --space-section-y: 32px;
+
+    /* === Radius === */
+    --radius-sm:    4px;
+    --radius-md:    6px;    /* inputs, small cards, badges */
+    --radius-lg:    8px;    /* modals, large cards — default */
+    --radius-xl:   12px;    /* command palette, large modals */
+    --radius-full: 9999px;
+    --radius:      var(--radius-lg);
+
+    /* === Shadow (functional, not decorative) === */
+    --shadow-sm:    0 1px 2px rgb(0 0 0 / 0.04);
+    --shadow-md:    0 4px 12px rgb(0 0 0 / 0.06);   /* floating menus */
+    --shadow-lg:    0 12px 32px rgb(0 0 0 / 0.08);  /* modals, palette */
+    --shadow-focus: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--focus-ring) / 0.5);
+
+    /* === Motion (GPU-compositable only — no width/height/margin/padding) === */
+    --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    --duration-instant: 80ms;
+    --duration-fast:    120ms;
+    --duration-default: 180ms;
+    --duration:         180ms;   /* alias */
+    --duration-slow:    220ms;
+
+    /* === Z-index === */
+    --z-sticky:   10;
+    --z-dropdown: 20;
+    --z-overlay:  30;
+    --z-modal:    40;
+    --z-toast:    50;
+    --z-tooltip:  60;
+
+    /* === Typography === */
+    --font-sans:  var(--font-sans), system-ui, -apple-system, sans-serif;
+    --font-serif: var(--font-serif), Georgia, serif;
+    --font-mono:  var(--font-mono), ui-monospace, monospace;
+  }
+
+  .dark {
+    --background:    240 7%  7%;   /* warm-tinted dark */
+    --surface:       235 6% 10%;
+    --surface-2:     235 6% 13%;
+    --surface-3:     235 6% 17%;
+    --border:        235 6% 20%;
+    --border-strong: 235 6% 30%;
+
+    --foreground:           0 0% 97%;
+    --foreground-muted:   240 5% 65%;
+    --foreground-subtle:  240 5% 50%;
+    --foreground-disabled:240 4% 38%;
+
+    --primary:        251 45% 70%;   /* lifted for dark contrast */
+    --primary-fg:     240  8%  7%;
+    --primary-soft:   251 28% 18%;
+    --primary-hover:  251 45% 76%;
+    --primary-active: 251 45% 64%;
+
+    --accent:      38 75% 58%;
+    --accent-soft: 38 40% 16%;
+    --amber:       38 75% 58%;
+    --amber-soft:  38 40% 16%;
+
+    --success:      142 55% 52%;
+    --success-soft: 142 30% 12%;
+    --warning:       38 78% 56%;
+    --warning-soft:  38 35% 14%;
+    --danger:         0 68% 62%;
+    --danger-soft:    0 38% 14%;
+    --info:         210 78% 62%;
+    --info-soft:    210 35% 13%;
+
+    --opacity-overlay: 0.78;
+  }
+
+  /* === Base resets === */
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.6;
+    font-feature-settings: "cv02", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  /* === Global focus indicator === */
+  *:focus-visible {
+    outline: 2px solid hsl(var(--focus-ring));
+    outline-offset: 2px;
+    border-radius: inherit;
+  }
+
+  /* === Surface transitions (theme switch only — text/borders snap) === */
+  body,
+  .theme-transition {
+    transition:
+      background-color var(--duration-slow) var(--ease-in-out),
+      color var(--duration-slow) var(--ease-in-out);
+  }
+
+  /* === Reduced motion override === */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* === Forced colors (Windows High Contrast) === */
+  @media (forced-colors: active) {
+    :focus-visible { outline: 2px solid ButtonText; }
+    .badge, .tag-chip { border: 1px solid ButtonText; }
+  }
+
+  /* === Skip link === */
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 0;
+    z-index: var(--z-tooltip);
+    padding: 8px 16px;
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-fg));
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: var(--radius-md);
+  }
+
+  .skip-link:focus {
+    top: 8px;
+    left: 8px;
+  }
+
+  /* === Lucide icon global stroke-width override === */
+  .lucide {
+    stroke-width: 1.5;
+  }
+
+  /* === Scrollbar === */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--border-strong));
+    border-radius: var(--radius-full);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--foreground-subtle));
+  }
+}
+
+@layer components {
+  /* Accent-bar card — flex row, left colored bar, hover shadow lift */
+  .accent-card {
+    @apply relative flex overflow-hidden rounded-lg border border-border bg-background
+           hover:shadow-md transition-shadow duration-[120ms];
+  }
+
+  .accent-card-bar {
+    @apply w-1 shrink-0 self-stretch;
+  }
+
+  .accent-card-body {
+    @apply flex flex-1 min-w-0 items-center gap-3 px-4 py-3;
+  }
+
+  /* Section label — uppercase tracking, used above card groups */
+  .section-label {
+    @apply text-[10px] font-medium uppercase tracking-widest text-foreground-subtle;
+  }
+
+  /* Inline badge pills */
+  .badge {
+    @apply inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium;
+  }
+
+  .badge-primary { @apply bg-primary/10 text-primary; }
+  .badge-danger  { @apply bg-danger/10  text-danger;  }
+  .badge-success { @apply bg-success/10 text-success; }
+  .badge-amber   { @apply bg-amber/10   text-amber;   }
+  .badge-muted   { @apply bg-surface-3  text-foreground-subtle; }
+
+  /* Page content wrapper — consistent max-width + padding */
+  .page-content {
+    @apply px-content-x py-8 max-w-3xl mx-auto;
+  }
+
+  .page-content-wide {
+    @apply px-content-x py-8 max-w-4xl mx-auto;
+  }
+
+  /* BlockNote — Notion-style token bridging (light) */
+  .bn-editor,
+  .bn-default-styles {
+    --bn-font-family:                 var(--font-sans);
+    --bn-color-editor-background:     hsl(var(--background));
+    --bn-color-editor-text:           hsl(var(--foreground));
+    --bn-color-text-placeholder:      hsl(var(--foreground-subtle));
+    --bn-color-side-menu:             hsl(var(--foreground-subtle));
+    --bn-color-side-menu-hover:       hsl(var(--foreground));
+    --bn-color-menu-background:       hsl(var(--background));
+    --bn-color-menu-border:           hsl(var(--border));
+    --bn-color-menu-hover:            hsl(var(--surface-2));
+    --bn-color-tooltip-background:    hsl(var(--foreground));
+    --bn-color-tooltip-text:          hsl(var(--background));
+    --bn-color-divider:               hsl(var(--border));
+    --bn-color-highlight:             hsl(var(--primary-soft));
+    --bn-shadow-menu:                 var(--shadow-md);
+    --bn-border-radius-menu:          var(--radius-lg);
+    --bn-border-radius-tooltip:       var(--radius-md);
+  }
+
+  /* BlockNote — dark-mode overrides */
+  .dark .bn-editor,
+  .dark .bn-default-styles {
+    --bn-color-editor-background:     hsl(var(--background));
+    --bn-color-editor-text:           hsl(var(--foreground));
+    --bn-color-text-placeholder:      hsl(var(--foreground-subtle));
+    --bn-color-side-menu:             hsl(var(--foreground-subtle));
+    --bn-color-side-menu-hover:       hsl(var(--foreground));
+    --bn-color-menu-background:       hsl(var(--surface-2));
+    --bn-color-menu-border:           hsl(var(--border));
+    --bn-color-menu-hover:            hsl(var(--surface-3));
+    --bn-color-tooltip-background:    hsl(var(--foreground));
+    --bn-color-tooltip-text:          hsl(var(--background));
+    --bn-color-divider:               hsl(var(--border));
+    --bn-color-highlight:             hsl(var(--primary-soft));
+  }
+
+  /* BlockNote — Notion-style typography */
+  .bn-editor .bn-block-content {
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .bn-editor h1 { font-size: 32px; font-weight: 600; line-height: 1.2; }
+  .bn-editor h2 { font-size: 24px; font-weight: 600; line-height: 1.3; }
+  .bn-editor h3 { font-size: 18px; font-weight: 600; line-height: 1.4; }
+
+  /* Block vertical rhythm — 4px between consecutive blocks */
+  .bn-editor .bn-block + .bn-block { margin-top: 4px; }
+
+  /* TipTap — Notion-style typography (Plan B / Phase 24) */
+  .tiptap-editor {
+    font-size: 16px;
+    line-height: 1.6;
+    color: hsl(var(--foreground));
+    min-height: 8rem;
+    caret-color: hsl(var(--foreground));
+  }
+  .tiptap-editor:focus { outline: none; }
+  .tiptap-editor > * + * { margin-top: 4px; }
+  .tiptap-editor p { margin: 0; min-height: 1.5em; }
+  .tiptap-editor h1 { font-size: 32px; font-weight: 600; line-height: 1.2; margin-top: 18px; }
+  .tiptap-editor h2 { font-size: 24px; font-weight: 600; line-height: 1.3; margin-top: 14px; }
+  .tiptap-editor h3 { font-size: 18px; font-weight: 600; line-height: 1.4; margin-top: 10px; }
+  .tiptap-editor ul,
+  .tiptap-editor ol { padding-left: 1.5rem; margin: 0; }
+  .tiptap-editor ul { list-style: disc; }
+  .tiptap-editor ol { list-style: decimal; }
+  .tiptap-editor li > p { display: inline; }
+  .tiptap-editor blockquote {
+    border-left: 3px solid hsl(var(--border));
+    padding-left: 0.75rem;
+    color: hsl(var(--foreground-muted));
+    margin: 4px 0;
+  }
+  .tiptap-editor hr {
+    border: 0;
+    border-top: 1px solid hsl(var(--border));
+    margin: 12px 0;
+  }
+  .tiptap-editor a {
+    color: hsl(var(--primary));
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .tiptap-editor mark.tiptap-highlight {
+    background: hsl(var(--warning-soft, var(--warning) / 0.25));
+    color: inherit;
+    padding: 0 2px;
+    border-radius: 2px;
+  }
+  .tiptap-editor code:not(pre code) {
+    background: hsl(var(--surface-2));
+    padding: 1px 4px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-family: var(--font-mono, ui-monospace, monospace);
+  }
+  /* Code block wrapper — owns the border, rounding, and houses the language
+     picker header. The inner <pre> handles the scrolling code surface. */
+  .tiptap-editor .code-block-wrapper {
+    background: hsl(var(--surface-2));
+    border: 1px solid hsl(var(--border));
+    border-radius: 8px;
+    margin: 6px 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .tiptap-editor .code-block-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+    padding: 4px 6px 0 12px;
+    border-bottom: 1px solid hsl(var(--border) / 0.5);
+    user-select: none;
+  }
+  .tiptap-editor .code-block-lang-picker {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    color: hsl(var(--foreground-subtle));
+  }
+  .tiptap-editor .code-block-lang-picker select {
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    border: 0;
+    color: inherit;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 2px 14px 2px 6px;
+    margin: 0;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 120ms ease;
+  }
+  .tiptap-editor .code-block-lang-picker select:hover,
+  .tiptap-editor .code-block-lang-picker select:focus-visible {
+    background: hsl(var(--surface-3, var(--surface-2)));
+    color: hsl(var(--foreground));
+    outline: none;
+  }
+  .tiptap-editor .code-block-lang-picker svg {
+    position: absolute;
+    right: 2px;
+    pointer-events: none;
+  }
+  .tiptap-editor .code-block-wrapper pre {
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    margin: 0;
+    padding: 12px 16px;
+    overflow-x: auto;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 13.5px;
+    line-height: 1.55;
+  }
+  /* Inline code reset inside a pre — keep wrapper background, but DO NOT
+     override `color` so github-dark.css `.hljs { color: #c9d1d9 }` paints the
+     base text and `.hljs-keyword` / `.hljs-string` / etc. paint tokens. */
+  .tiptap-editor .code-block-wrapper pre code {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    font-size: inherit;
+    font-family: inherit;
+    display: block;
+  }
+  /* Generic pre fallback for any code block without our NodeView wrapper
+     (e.g. server-rendered preview, paste with `pre` tag, legacy content). */
+  .tiptap-editor pre:not(.code-block-wrapper pre) {
+    background: hsl(var(--surface-2));
+    border: 1px solid hsl(var(--border));
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin: 6px 0;
+    overflow-x: auto;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 13.5px;
+    line-height: 1.55;
+  }
+  .tiptap-editor img {
+    max-width: 100%;
+    border-radius: 6px;
+    margin: 4px 0;
+  }
+  /* Placeholder for empty paragraphs — TipTap's Placeholder extension uses
+     `.is-editor-empty` + `data-placeholder`. */
+  .tiptap-editor p.is-editor-empty:first-child::before {
+    content: attr(data-placeholder);
+    color: hsl(var(--foreground-subtle));
+    float: left;
+    height: 0;
+    pointer-events: none;
+  }
+  /* Constrain content width to match Notion-style line length */
+  .tiptap-host > div { max-width: 720px; margin: 0 auto; }
+  /* Token colours come from the `github-dark.css` theme imported by
+     TipTapEditorImpl. Avoid local `.hljs-*` overrides here so the theme wins. */
+
+  /* Mantine dropdown portals used by BlockNote need to sit above our sticky header */
+  [data-mantine-portal] {
+    z-index: 200;
+  }
+
+  /* BlockNote formatting toolbar + suggestion menu — float above all */
+  .bn-formatting-toolbar,
+  .bn-suggestion-menu {
+    z-index: 200;
+  }
+
+  /* Stats strip — used on Now Brief, Flashcards, PDFs */
+  .stats-strip {
+    @apply border-b border-border bg-surface-2 px-content-x;
+  }
+
+  .stats-strip-inner {
+    @apply max-w-3xl mx-auto flex items-stretch divide-x divide-border;
+  }
+
+  .stat-cell {
+    @apply flex flex-col py-4 pr-8 first:pl-0;
+  }
+
+  .stat-value {
+    @apply text-3xl font-mono leading-none tabular-nums;
+  }
+
+  .stat-label {
+    @apply text-[10px] font-medium uppercase tracking-widest text-foreground-subtle mt-1;
+  }
+}

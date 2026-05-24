@@ -1,0 +1,39 @@
+# Production overlay: hides backend service ports from the host.
+#
+# Backend services (core-service, ai-engine) are reachable on the Docker
+# network for sibling containers (gateway, workers, frontend). Their host
+# bindings exist in docker-compose.yml only for local dev convenience.
+#
+# Mongo, Redis, and Chroma host bindings are likewise removed — sibling
+# containers reach them by service name on the synapse-net network.
+#
+# Usage:
+#   docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+#
+# What stays exposed:
+#   - gateway:4000 (the public HTTP/SSE/WebSocket entrypoint)
+#   - frontend:3000 (Next.js)
+#
+# Per NFR2.3 / spec §3.4 (port isolation).
+
+services:
+  # ai-engine in dev publishes 8000:8000 — strip it here.
+  # `ports: []` overrides the dev list entirely.
+  ai-engine:
+    ports: !reset []
+
+  # core-service has no host binding in docker-compose.yml; this clause is
+  # idempotent insurance so future edits to the base file can't accidentally
+  # publish 4001 in prod.
+  core-service:
+    ports: !reset []
+
+  # Infrastructure: keep reachable on the internal network only.
+  mongodb:
+    ports: !reset []
+
+  redis:
+    ports: !reset []
+
+  chromadb:
+    ports: !reset []
